@@ -65,7 +65,7 @@ export default async function CheckInPage({
           {/* Header */}
           <div className="bg-stone-900 px-7 pt-8 pb-7 text-white">
             <p className="font-mono text-emerald-400 text-sm font-medium mb-5">
-              presenz.
+              daju.
             </p>
             <div className="flex items-center gap-3 mb-1">
               <div className={`w-11 h-11 rounded-full ${color.bg} ${color.text} flex items-center justify-center font-semibold text-base flex-shrink-0`}>

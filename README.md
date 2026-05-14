@@ -1,4 +1,4 @@
-# Daju — The guy every in neighbourhood whi is reliable, always there, knows everyone
+# Daju — The guy every in neighbourhood who is reliable, always there, knows everyone
 
 A lightweight, domain-agnostic attendance tracking system built with Next.js 14, Supabase (PostgreSQL), Tailwind CSS, and Radix UI.
 

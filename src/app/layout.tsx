@@ -5,8 +5,8 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 
 export const metadata: Metadata = {
-  title: 'Presenz — Attendance System',
-  description: 'Simple, domain-agnostic attendance tracking',
+  title: 'Daju — reliable, always there, knows everyone',
+  description: 'Simple, reliable, always there ',
 }
 
 export default function RootLayout({

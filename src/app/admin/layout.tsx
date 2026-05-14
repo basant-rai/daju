@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { LayoutDashboard, Users, CalendarCheck, Settings } from 'lucide-react'
+import Logo from '@/components/logo/logo'
 
 const nav = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
@@ -16,15 +17,10 @@ export default function AdminLayout({
   return (
     <div className="flex min-h-screen">
       {/* Sidebar */}
-      <aside className="w-56 bg-stone-900 flex flex-col flex-shrink-0">
+      <aside className="w-56 bg-white flex flex-col flex-shrink-0">
         {/* Logo */}
-        <div className="px-5 py-6 border-b border-white/10">
-          <p className="text-white font-semibold text-lg tracking-tight font-mono">
-            pres<span className="text-emerald-400">enz</span>
-          </p>
-          <p className="text-stone-500 text-xs mt-0.5 uppercase tracking-widest">
-            Attendance
-          </p>
+        <div className="px-5 py-2 border-b border-black/10">
+          <Logo />
         </div>
 
         {/* Nav */}
