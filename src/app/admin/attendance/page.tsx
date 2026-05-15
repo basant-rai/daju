@@ -34,7 +34,7 @@ export default async function AttendancePage() {
         <span className="text-xs text-stone-400">Last 200 check-ins</span>
       </header>
 
-      <div className="flex-1 p-7 space-y-6">
+      <div className="flex-1 p-4 lg:p-7 space-y-6">
         {dates.length === 0 && (
           <div className="py-20 text-center text-stone-400">
             <CalendarCheck size={32} className="mx-auto mb-3 opacity-40" />

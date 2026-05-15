@@ -94,9 +94,9 @@ export default async function AdminDashboard() {
         </span>
       </header>
 
-      <div className="flex-1 p-7 space-y-6">
+      <div className="flex-1 p-4 lg:p-7 space-y-6">
         {/* Stats */}
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {stats.map(({ label, value, sub, icon: Icon, iconBg, iconColor }) => (
             <div
               key={label}

@@ -77,7 +77,7 @@ export default function MembersClient({ members }: { members: any[] }) {
   }
 
   return (
-    <div className="flex-1 p-7">
+    <div className="flex-1 p-4 lg:p-7">
       {/* Toolbar */}
       <div className="flex items-center gap-3 mb-5">
         <div className="relative flex-1 max-w-sm">
@@ -93,7 +93,7 @@ export default function MembersClient({ members }: { members: any[] }) {
 
         <Dialog.Root open={open} onOpenChange={setOpen}>
           <Dialog.Trigger asChild>
-            <button className="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-colors">
+            <button className="flex items-center gap-2 px-4 py-2 bg-blue-700 text-white text-sm font-medium rounded-lg hover:bg-blue-800 transition-colors">
               <Plus size={15} />
               Add Member
             </button>
@@ -116,7 +116,7 @@ export default function MembersClient({ members }: { members: any[] }) {
                     <label className="block text-xs font-medium text-stone-600 mb-1.5">Full Name</label>
                     <input
                       type="text"
-                      placeholder="Basant Shrestha"
+                      placeholder="John Doe"
                       value={form.name}
                       onChange={(e) => setForm({ ...form, name: e.target.value })}
                       className="w-full px-3 py-2 text-sm border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-400"
@@ -170,7 +170,7 @@ export default function MembersClient({ members }: { members: any[] }) {
                 <button
                   onClick={handleAdd}
                   disabled={isPending}
-                  className="px-4 py-2 text-sm bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 disabled:opacity-50 font-medium"
+                  className="px-4 py-2 text-sm bg-blue-700 text-white rounded-lg hover:bg-blue-800 disabled:opacity-50 font-medium"
                 >
                   {isPending ? 'Adding...' : 'Add Member'}
                 </button>
@@ -182,7 +182,7 @@ export default function MembersClient({ members }: { members: any[] }) {
 
       {/* Table */}
       <div className="bg-white rounded-xl border border-stone-200 overflow-hidden">
-        <table className="w-full">
+        <table className="w-full hidden md:block">
           <thead>
             <tr className="border-b border-stone-100 bg-stone-50">
               {['Member', 'Plan', 'Status', 'Expiry', 'Visits', 'Check-in Link', ''].map((h) => (
@@ -211,7 +211,7 @@ export default function MembersClient({ members }: { members: any[] }) {
                     </div>
                   </td>
                   <td className="px-5 py-3.5">
-                    <span className="text-xs font-medium text-stone-600 bg-stone-100 px-2 py-1 rounded-md">
+                    <span className="text-xs font-medium text-stone-600 bg-stone-100 px-2 py-1 rounded-md ">
                       {member.plan}
                     </span>
                   </td>
@@ -269,6 +269,83 @@ export default function MembersClient({ members }: { members: any[] }) {
             })}
           </tbody>
         </table>
+
+        {/* Mobile List: Visible only on small screens */}
+        <div className="md:hidden divide-y divide-stone-100">
+          {filtered.map((member) => {
+            const status = getMemberStatus(member.expiry_date);
+            const color = getAvatarColor(member.name);
+            const days = daysLeft(member.expiry_date);
+
+            return (
+              <div key={member.id} className="p-4 space-y-4 active:bg-stone-50 transition-colors">
+                {/* Header: Avatar, Name, and Quick Actions */}
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className={`w-10 h-10 rounded-full ${color.bg} ${color.text} flex items-center justify-center text-sm font-bold`}>
+                      {getInitials(member.name)}
+                    </div>
+                    <div>
+                      <p className="text-base font-semibold text-stone-800">{member.name}</p>
+                      <p className="text-xs text-stone-400">{member.phone}</p>
+                    </div>
+                  </div>
+
+                  {/* Contextual Actions (Top Right) */}
+                  <div className="flex gap-1">
+                    <a href={`/checkin/${member.token}`} className="p-2 text-stone-400">
+                      <ExternalLink size={18} />
+                    </a>
+                    <button onClick={() => handleDelete(member.id)} className="p-2 text-stone-400">
+                      <Trash2 size={18} />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Grid Info: Plan, Status, Visits */}
+                <div className="grid grid-cols-2 gap-4 py-2">
+                  <div>
+                    <p className="text-[10px] uppercase tracking-wider text-stone-400 font-bold">Plan / Status</p>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="text-xs font-medium text-stone-600 bg-stone-100 px-2 py-0.5 rounded">
+                        {member.plan}
+                      </span>
+                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${STATUS_STYLES[status]}`}>
+                        {STATUS_LABELS[status]}
+                      </span>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-wider text-stone-400 font-bold">Visits / Expiry</p>
+                    <p className="text-sm mt-1 font-medium text-stone-700">
+                      {member.total_checkins} visits <span className="text-stone-300 mx-1">|</span> {formatDate(member.expiry_date)}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Large Tap Target for Check-in Link */}
+                <button
+                  onClick={() => handleCopy(member.token)}
+                  className="w-full flex items-center justify-between bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 hover:bg-stone-100 active:scale-[0.98] transition-all"
+                >
+                  <div className="flex flex-col items-start">
+                    <span className="text-[10px] uppercase text-stone-400 font-bold">Copy Check-in Link</span>
+                    <span className="text-xs font-mono text-stone-600 truncate max-w-[200px]">
+                      ...{member.token.slice(-12)}
+                    </span>
+                  </div>
+                  {copiedToken === member.token ? (
+                    <span className="flex items-center gap-1 text-emerald-600 text-xs font-bold uppercase">
+                      <Check size={14} /> Copied
+                    </span>
+                  ) : (
+                    <Copy size={16} className="text-stone-400" />
+                  )}
+                </button>
+              </div>
+            );
+          })}
+        </div>
 
         {filtered.length === 0 && (
           <div className="py-14 text-center text-stone-400">

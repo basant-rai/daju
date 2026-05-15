@@ -1,7 +1,7 @@
-import React from 'react';
 // import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import { CheckIcon, ArrowRightIcon, ZapIcon, ShieldCheckIcon, HeartIcon } from 'lucide-react';
 import Logo from '@/components/logo/logo';
+import Link from 'next/link';
 
 const LandingPage = () => {
   return (
@@ -10,10 +10,10 @@ const LandingPage = () => {
       <nav className="flex items-center justify-between px-6 py-6 max-w-7xl mx-auto">
         <Logo />
         <div className="flex items-center gap-6">
-          <button className="text-sm font-semibold text-slate-600 hover:text-blue-700">Login</button>
-          <button className="bg-blue-700 text-white px-5 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-blue-200 hover:bg-blue-800 transition-all">
+          <Link href={"/auth/login"} className="text-sm font-semibold text-slate-600 hover:text-blue-700">Login</Link>
+          <Link href={"/auth/register"} className="bg-blue-700 text-white px-5 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-blue-200 hover:bg-blue-800 transition-all">
             Get Started
-          </button>
+          </Link>
         </div>
       </nav>
 
@@ -136,7 +136,7 @@ const FeatureCard = ({ icon, title, description }: any) => (
   </div>
 );
 
-const PriceCard = ({ duration, price, subtitle, features, popular, perMonth }: any) => (
+const PriceCard = ({ duration, price, subtitle, features, popular, perMonth }: { duration: string, price: string, subtitle: string, features: string[], popular?: boolean, perMonth?: boolean }) => (
   <div className={`relative p-8 rounded-3xl border-2 transition-all hover:shadow-xl ${popular ? 'border-blue-600 bg-white scale-105 z-10' : 'border-slate-100 bg-slate-50/50'}`}>
     {popular && (
       <span className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest">

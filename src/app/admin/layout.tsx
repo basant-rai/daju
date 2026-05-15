@@ -17,7 +17,7 @@ export default function AdminLayout({
   return (
     <div className="flex min-h-screen">
       {/* Sidebar */}
-      <aside className="w-56 bg-white flex flex-col flex-shrink-0">
+      <aside className="hidden lg:flex w-56 bg-white flex-col flex-shrink-0">
         {/* Logo */}
         <div className="px-5 py-2 border-b border-black/10">
           <Logo />
@@ -41,6 +41,22 @@ export default function AdminLayout({
           </p>
         </div>
       </aside>
+
+      {/* --- MOBILE BOTTOM NAV --- */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-black/10 px-2 pb-safe pt-2 z-50">
+        <div className="flex items-center justify-around">
+          {nav.map(({ href, label, icon: Icon }) => (
+            <Link
+              key={href}
+              href={href}
+              className="flex flex-col items-center justify-center flex-1 py-1 px-2 text-stone-500 hover:text-black transition-colors"
+            >
+              <Icon size={20} />
+              <span className="text-[10px] mt-1 font-medium">{label}</span>
+            </Link>
+          ))}
+        </div>
+      </nav>
 
       {/* Main */}
       <main className="flex-1 flex flex-col overflow-hidden">

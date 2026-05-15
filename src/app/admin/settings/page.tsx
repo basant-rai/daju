@@ -4,7 +4,7 @@ export default function SettingsPage() {
       <header className="bg-white border-b border-stone-200 px-7 h-14 flex items-center flex-shrink-0">
         <h1 className="font-semibold text-stone-800">Settings</h1>
       </header>
-      <div className="flex-1 p-7">
+      <div className="flex-1 p-4 lg:p-7">
         <div className="bg-white rounded-xl border border-stone-200 p-6 max-w-lg space-y-4">
           <h2 className="font-semibold text-stone-800">Organization</h2>
           <div>

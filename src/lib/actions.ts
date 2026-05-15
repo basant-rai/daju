@@ -1,7 +1,8 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import { createAdminSupabaseClient } from '@/lib/supabase-server'
+import { createAdminSupabaseClient, createServerSupabaseClient } from '@/lib/supabase-server'
+import { redirect } from 'next/navigation'
 
 const ORG_ID = process.env.NEXT_PUBLIC_ORG_ID!
 
@@ -67,4 +68,54 @@ export async function checkInMember(memberId: string) {
   revalidatePath('/admin')
   revalidatePath(`/checkin`)
   return { success: true }
+}
+
+export async function registerOrg(formData: {
+  businessName: string
+  ownerName: string
+  phone: string
+  email: string
+  password: string
+}) {
+  const supabase = createAdminSupabaseClient()
+
+  // 1. Create auth user
+  const { data: authData, error: authError } = await supabase.auth.admin.createUser({
+    email: formData.email,
+    password: formData.password,
+    email_confirm: true,
+  })
+  if (authError) throw new Error(authError.message)
+
+  // 2. Create organization row
+  const { data: org, error: orgError } = await supabase
+    .from('organizations')
+    .insert({ name: formData.businessName, slug: formData.businessName.toLowerCase().replace(/\s+/g, '-') })
+    .select()
+    .single()
+  if (orgError) throw new Error(orgError.message)
+
+  // 3. Link user to org (add a profiles table for this)
+  await supabase.from('profiles').insert({
+    id: authData.user.id,
+    org_id: org.id,
+    name: formData.ownerName,
+    phone: formData.phone,
+  })
+
+  redirect('/admin')
+}
+
+
+export async function loginAdmin(formData: {
+  email: string
+  password: string
+}) {
+  const supabase = createServerSupabaseClient()
+  const { error } = await supabase.auth.signInWithPassword({
+    email: formData.email,
+    password: formData.password,
+  })
+  if (error) throw new Error(error.message)
+  redirect('/admin')
 }

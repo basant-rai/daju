@@ -55,7 +55,7 @@ export default async function CheckInPage({
       ? 'bg-red-500'
       : status === 'expiring'
       ? 'bg-orange-400'
-      : 'bg-emerald-500'
+      : 'bg-blue-800'
 
   return (
     <div className="min-h-screen bg-stone-100 flex items-center justify-center p-4">

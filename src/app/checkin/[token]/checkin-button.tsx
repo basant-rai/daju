@@ -69,10 +69,11 @@ export default function CheckInButton({
     <button
       onClick={handleCheckIn}
       disabled={isPending}
-      className="w-full flex items-center justify-center gap-2.5 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-xl transition-colors disabled:opacity-60 disabled:cursor-not-allowed active:scale-[0.98]"
+      className="w-full flex items-center justify-center gap-2.5 py-3.5 bg-blue-800 hover:bg-blue-900 text-white text-sm font-semibold rounded-xl transition-colors disabled:opacity-60 disabled:cursor-not-allowed active:scale-[0.98]"
     >
       <Fingerprint size={18} />
-      {isPending ? 'Checking in...' : 'Check In Now'}
+      {isPending ? 'Checking in...' : 'Daju, Ma Aaipuge'}
+      {/* Check In Now */}
     </button>
   )
 }
